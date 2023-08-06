@@ -3,11 +3,12 @@ from typing import Dict
 from django.db import transaction
 from rest_framework import serializers
 import calendar
+
+from api.providers.number_facts import NumberFactProvider
 from fun_facts.models import FunFact
 
 
 class FunFactSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = FunFact
         fields = '__all__'
@@ -19,10 +20,14 @@ class FunFactSerializer(serializers.ModelSerializer):
     def update_or_create(self, validated_data: Dict) -> FunFact:
         month = validated_data.get('month')
         day = validated_data.get('day')
+        fact = NumberFactProvider.get_fact(month, day)
         try:
             fun_fact = FunFact.objects.get(month=month, day=day)
+            if fact and fun_fact.fact != fact:
+                fun_fact.fact = fact
+                fun_fact.save()
         except FunFact.DoesNotExist:
-            fun_fact = FunFact.objects.create(**validated_data)
+            fun_fact = FunFact.objects.create(**validated_data, fact=fact)
         return fun_fact
 
     def to_representation(self, obj: FunFact) -> Dict:
@@ -33,3 +38,6 @@ class FunFactSerializer(serializers.ModelSerializer):
         except (AttributeError, IndexError):
             pass
         return data
+
+    def get_unique_together_validators(self):
+        return []
