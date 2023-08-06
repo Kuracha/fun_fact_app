@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fun_facts.apps.FunFactsConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
