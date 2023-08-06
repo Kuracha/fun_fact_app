@@ -11,9 +11,15 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+# 3rd-party
+import environ
+import django.core.exceptions
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +32,10 @@ SECRET_KEY = 'django-insecure-h5)n^41!=04ifxh!tmsx060_3u4k#=6a3gf=3al+)u=y0#-q7#
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = env('ALLOWED_HOSTS')
 
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend([host.strip() for host in ALLOWED_HOSTS_ENV.split(',')])
 
 # Application definition
 
@@ -74,12 +83,24 @@ WSGI_APPLICATION = 'fun_fact_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE'),
+            'HOST': env('DB_HOST'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'PORT': env('DB_PORT', default='5432')
+        },
     }
-}
+except django.core.exceptions.ImproperlyConfigured:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
 
 
 # Password validation
