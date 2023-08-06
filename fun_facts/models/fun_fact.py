@@ -7,13 +7,11 @@ from django.db import models
 class FunFact(models.Model):
     month = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)], default=1)
     day = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(31)], default=1)
-    fact = models.TextField()
+    fact = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Fun Fact'
-        constraints = [
-            models.UniqueConstraint(fields=['month', 'day'], name="%(class)s_month_day_uniq_constraint")
-        ]
+        unique_together = ('month', 'day')
 
     def __str__(self) -> str:
         return f'{self.month}/{self.day}'
