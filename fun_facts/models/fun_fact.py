@@ -15,5 +15,5 @@ class FunFact(models.Model):
             models.UniqueConstraint(fields=['month', 'day'], name="%(class)s_month_day_uniq_constraint")
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.month}/{self.day}'
