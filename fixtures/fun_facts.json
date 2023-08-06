@@ -1,0 +1,11 @@
+[
+  {
+    "model": "fun_facts.funfact",
+    "pk": 1,
+    "fields": {
+      "month": 1,
+      "day": 2,
+      "fact": "Test"
+    }
+  }
+]
