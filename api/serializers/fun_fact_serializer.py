@@ -1,16 +1,14 @@
 from typing import Dict
 
 from django.db import transaction
-from rest_framework import serializers
-import calendar
 
 from api.providers.number_facts import NumberFactProvider
+from api.serializers.base.month_name_serializer import BaseMonthNameSerializer
 from fun_facts.models import FunFact
 
 
-class FunFactSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FunFact
+class FunFactSerializer(BaseMonthNameSerializer):
+    class Meta(BaseMonthNameSerializer.Meta):
         fields = '__all__'
 
     def create(self, validated_data: Dict) -> FunFact:
@@ -29,15 +27,6 @@ class FunFactSerializer(serializers.ModelSerializer):
         except FunFact.DoesNotExist:
             fun_fact = FunFact.objects.create(**validated_data, fact=fact)
         return fun_fact
-
-    def to_representation(self, obj: FunFact) -> Dict:
-        data = super().to_representation(obj)
-        try:
-            month = data['month']
-            data['month'] = calendar.month_name[month]
-        except (AttributeError, IndexError):
-            pass
-        return data
 
     def get_unique_together_validators(self):
         return []
