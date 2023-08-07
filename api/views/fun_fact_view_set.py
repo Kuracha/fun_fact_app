@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers.fun_fact_serializer import FunFactSerializer
-from api.services.permissions.delete_permission import DeleteWithAPIKeyPermission
+from api.services.permissions.delete_with_api_key_permission import DeleteWithAPIKeyPermission
 
 from fun_facts.models import FunFact
 

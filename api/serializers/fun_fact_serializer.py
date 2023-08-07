@@ -18,7 +18,7 @@ class FunFactSerializer(BaseMonthNameSerializer):
     def update_or_create(self, validated_data: Dict) -> FunFact:
         month = validated_data.get('month')
         day = validated_data.get('day')
-        fact = NumberFactProvider.get_fact(month, day)
+        fact = NumberFactProvider().get_fact(month, day)
         try:
             fun_fact = FunFact.objects.get(month=month, day=day)
             if fact and fun_fact.fact != fact:
