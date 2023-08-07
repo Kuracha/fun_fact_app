@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # Standard Library
 import os
 from pathlib import Path
-import dj_database_url
 import django_heroku
 
 # Django
@@ -92,27 +91,24 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-# try:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': env('DB_ENGINE'),
-#             'HOST': env('DB_HOST'),
-#             'NAME': env('DB_NAME'),
-#             'USER': env('DB_USER'),
-#             'PASSWORD': env('DB_PASS'),
-#             'PORT': env('DB_PORT', default='5432')
-#         },
-#     }
-# except django.core.exceptions.ImproperlyConfigured:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         },
-#     }
-DATABASES = {}
-DATABASE_URL = f"postgres://{env('DB_USER')}:{env('DB_PASS')}@{env('DB_HOST')}:{env('DB_PORT', default='5432')}/{env('DB_NAME')}"
-DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE'),
+            'HOST': env('DB_HOST'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'PORT': env('DB_PORT', default='5432')
+        },
+    }
+except django.core.exceptions.ImproperlyConfigured:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
