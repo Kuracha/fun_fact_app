@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 #     }
 DATABASES = {}
 DATABASE_URL = f"postgres://{env('DB_USER')}:{env('DB_PASS')}@{env('DB_HOST')}:{env('DB_PORT', default='5432')}/{env('DB_NAME')}"
-DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
