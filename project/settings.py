@@ -10,23 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+# Standard Library
 from pathlib import Path
+
+# Django
+import django.core.exceptions
+
+# 3rd-party
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h5)n^41!=04ifxh!tmsx060_3u4k#=6a3gf=3al+)u=y0#-q7#'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = env('ALLOWED_HOSTS')
 
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend([host.strip() for host in ALLOWED_HOSTS_ENV.split(',')])
 
 # Application definition
 
@@ -37,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fun_facts.apps.FunFactsConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -68,18 +83,30 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fun_fact_app.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE'),
+            'HOST': env('DB_HOST'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'PORT': env('DB_PORT', default='5432')
+        },
     }
-}
+except django.core.exceptions.ImproperlyConfigured:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
 
 
 # Password validation
@@ -122,3 +149,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+FILE_LOGGER_NAME = 'file'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file_handler': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/logs.log',
+        },
+    },
+    'loggers': {
+        FILE_LOGGER_NAME: {
+            'handlers': ['file_handler'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
