@@ -7,5 +7,23 @@
       "day": 2,
       "fact": "Test"
     }
+  },
+  {
+    "model": "fun_facts.funfact",
+    "pk": 2,
+    "fields": {
+      "month": 2,
+      "day": 2,
+      "fact": "Test2"
+    }
+  },
+  {
+    "model": "fun_facts.funfact",
+    "pk": 3,
+    "fields": {
+      "month": 2,
+      "day": 3,
+      "fact": "Test3"
+    }
   }
 ]

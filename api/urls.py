@@ -6,8 +6,8 @@ from api.views.popular_fun_facts_view_set import PopularFunFactViewSet
 
 router = DefaultRouter()
 
-router.register('dates', FunFactViewSet)
-router.register('popular', PopularFunFactViewSet)
+router.register('dates', FunFactViewSet, basename='date')
+router.register('popular', PopularFunFactViewSet, basename='popular')
 
 app_name = 'api'
 
