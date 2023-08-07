@@ -28,7 +28,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -89,29 +88,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-try:
-    DATABASES = {
-        'default': {
-            'ENGINE': env('DB_ENGINE'),
-            'HOST': env('DB_HOST'),
-            'NAME': env('DB_NAME'),
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASS'),
-            'PORT': env('DB_PORT', default='5432')
-        },
-    }
-except django.core.exceptions.ImproperlyConfigured:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        },
-    }
+# try:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': env('DB_ENGINE'),
+#             'HOST': env('DB_HOST'),
+#             'NAME': env('DB_NAME'),
+#             'USER': env('DB_USER'),
+#             'PASSWORD': env('DB_PASS'),
+#             'PORT': env('DB_PORT', default='5432')
+#         },
+#     }
+# except django.core.exceptions.ImproperlyConfigured:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         },
+#     }
+DATABASES = {}
+DATABASE_URL = f"postgres://{env('DB_USER')}:{env('DB_PASS')}@{env('DB_HOST')}:{env('DB_PORT', default='5432')}/{env('DB_NAME')}"
 DATABASES['default'] = dj_database_url.config()
 
 # Password validation
@@ -132,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -143,7 +142,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
