@@ -93,26 +93,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-# try:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': env('DB_ENGINE'),
-#             'HOST': env('DB_HOST'),
-#             'NAME': env('DB_NAME'),
-#             'USER': env('DB_USER'),
-#             'PASSWORD': env('DB_PASS'),
-#             'PORT': env('DB_PORT', default='5432')
-#         },
-#     }
-# except django.core.exceptions.ImproperlyConfigured:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         },
-#     }
 
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE'),
+            'HOST': env('DB_HOST'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'PORT': env('DB_PORT', default='5432')
+        },
+    }
+except django.core.exceptions.ImproperlyConfigured:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
+DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
