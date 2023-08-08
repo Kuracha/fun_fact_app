@@ -1,11 +1,16 @@
+# Standard Library
 from typing import Optional
 from unittest.mock import patch
 
-import requests
+# Django
 from django.http import HttpResponse
 from django.test import TestCase
+
+# 3rd-party
+import requests
 from rest_framework import status
 
+# Project
 from api.providers.number_facts import NumberFactProvider
 
 

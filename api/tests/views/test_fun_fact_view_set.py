@@ -1,13 +1,18 @@
+# Standard Library
 import calendar
 from unittest.mock import patch
 
+# Django
 from django.core.exceptions import ObjectDoesNotExist
-from django.test import TestCase, override_settings
-
+from django.test import TestCase
+from django.test import override_settings
 from django.urls import reverse
+
+# 3rd-party
 from rest_framework import status
 from rest_framework.test import APIClient
 
+# Project
 from api.providers.number_facts import NumberFactProvider
 from fun_facts.models import FunFact
 

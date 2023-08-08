@@ -1,8 +1,11 @@
+# Standard Library
 import calendar
 from typing import Dict
 
+# 3rd-party
 from rest_framework import serializers
 
+# Project
 from fun_facts.models import FunFact
 
 
