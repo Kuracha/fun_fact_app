@@ -34,10 +34,10 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(env('DEBUG', default='False'))
+DEBUG = bool(env('DEBUG'))
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS_ENV = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS_ENV = env('ALLOWED_HOSTS', default='*')
 
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend([host.strip() for host in ALLOWED_HOSTS_ENV.split(',')])
