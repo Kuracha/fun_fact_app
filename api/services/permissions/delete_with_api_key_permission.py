@@ -1,4 +1,7 @@
+# Django
 from django.conf import settings
+
+# 3rd-party
 from rest_framework import permissions
 
 

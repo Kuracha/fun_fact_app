@@ -13,12 +13,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # Standard Library
 import os
 from pathlib import Path
-import django_heroku
 
 # Django
 import django.core.exceptions
 
 # 3rd-party
+import django_heroku
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

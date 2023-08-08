@@ -1,10 +1,14 @@
+# Standard Library
+import logging
 import traceback
 from typing import Optional
-from rest_framework.response import Response
-import requests
-import logging
 
+# Django
 from django.conf import settings
+
+# 3rd-party
+import requests
+from rest_framework.response import Response
 
 logger = logging.getLogger(settings.FILE_LOGGER_NAME)
 

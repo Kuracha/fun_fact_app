@@ -1,10 +1,15 @@
+# Standard Library
 import calendar
 
+# Django
 from django.test import TestCase
 from django.urls import reverse
+
+# 3rd-party
 from rest_framework import status
 from rest_framework.test import APIClient
 
+# Project
 from fun_facts.models import FunFact
 
 
