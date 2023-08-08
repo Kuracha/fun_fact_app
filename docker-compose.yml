@@ -6,9 +6,10 @@ services:
     command: sh -c "./wait-for db:5432 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
+    env_file:
+      - ./project/.env
     environment:
-      - DEBUG=1
-      - SECRET_KEY=foo
+      - SECRET_KEY='${SECRET_KEY}'
     depends_on:
       - db
 
@@ -17,9 +18,9 @@ services:
       volumes:
         - postgres_data:/var/lib/postgresql_dev/data/
       environment:
-        - POSTGRES_USER=postgresql
-        - POSTGRES_PASSWORD=postgresql
-        - POSTGRES_DB=postgresql
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${postgresql}
+        - POSTGRES_DB=${postgresql}
 
 volumes:
   postgres_data:
