@@ -1,7 +1,11 @@
+# Standard Library
 from typing import Dict
+from typing import List
 
+# Django
 from django.db import transaction
 
+# Project
 from api.providers.number_facts import NumberFactProvider
 from api.serializers.base.month_name_serializer import BaseMonthNameSerializer
 from fun_facts.models import FunFact
@@ -29,5 +33,5 @@ class FunFactSerializer(BaseMonthNameSerializer):
             fun_fact = FunFact.objects.create(**validated_data, fact=fact)
         return fun_fact
 
-    def get_unique_together_validators(self):
+    def get_unique_together_validators(self) -> List:
         return []

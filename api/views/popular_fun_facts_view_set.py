@@ -1,7 +1,10 @@
-from rest_framework import viewsets, status
+# 3rd-party
+from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.response import Response
 
+# Project
 from api.serializers.popular_fun_fact_serializer import PopularFunFactsSerializer
 from fun_facts.models import FunFact
 
