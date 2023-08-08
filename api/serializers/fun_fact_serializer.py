@@ -10,6 +10,7 @@ from fun_facts.models import FunFact
 class FunFactSerializer(BaseMonthNameSerializer):
     class Meta(BaseMonthNameSerializer.Meta):
         fields = '__all__'
+        read_only_fields = ['fact']
 
     def create(self, validated_data: Dict) -> FunFact:
         return self.update_or_create(validated_data)
