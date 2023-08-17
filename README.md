@@ -1,7 +1,5 @@
 # fun_fact_app
 
-App works live under: http://fun-fact-be232964e1e0.herokuapp.com/
-
 To run app locally in docker:
 1. in ./project create `.env` based on `.bak.env` example
 2. in terminal go to same path were `docker-compose.yml` is located.
